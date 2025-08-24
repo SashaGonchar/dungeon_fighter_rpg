@@ -1,12 +1,16 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar.jsx";
+import Footer from "../components/Footer.jsx";
 
 
 function Layout() {
     return (
-        <div className="w-full h-screen bg-fuchsia-100">
+        <div className="bg-fuchsia-100 flex flex-col min-h-screen">
             <NavBar />
-            <Outlet />
+            <main className={'container mx-auto py-6 grow'}>
+                <Outlet />
+            </main>
+            <Footer/>
         </div>
     );
 }
