@@ -1,6 +1,13 @@
+
+import GameControlPanel from "../features/gameField/GameControlPanel.jsx";
+import MapGrid from "../features/gameField/MapGrid.jsx";
 function Fight(){
     return (
-        <p>Fight page</p>
+        <div>
+            <GameControlPanel/>
+            <MapGrid/>
+        </div>
+
     )
 }
 
