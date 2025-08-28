@@ -1,10 +1,11 @@
-import { useSelector, useDispatch } from "react-redux";
-import { setCellValue } from "./gameSlice.js";
+import {useDispatch, useSelector} from "react-redux";
+import {setTargetSpot} from "./gameSlice.js";
+import {startHeroMove} from "./GameThunks.js";
+
 
 function MapGrid() {
-    const dispatch = useDispatch();
     const map = useSelector((state) => state.currentMap.map);
-
+    const dispatch = useDispatch();
     if (map.length === 0) return null;
 
     return (
@@ -17,19 +18,13 @@ function MapGrid() {
                     <div
                         key={`${cell.x}-${cell.y}`}
                         className={`flex items-center justify-center w-8 h-8 border border-gray-400 text-xs cursor-pointer ${
-                            cell.value ? "bg-red-500" : "bg-white"
+                            cell.player ? "bg-blue-500" : "bg-white"   // 👈 теперь герой виден
                         }`}
-                        onClick={() =>
-                            dispatch(
-                                setCellValue({
-                                    x: cell.x,
-                                    y: cell.y,
-                                    value: cell.value ? null : 1,
-                                })
-                            )
-                        }
+                        onClick={()=>{
+                            dispatch(setTargetSpot({ x: cell.x, y: cell.y }));
+                            dispatch(startHeroMove());
+                        }}
                     >
-                        {cell.value || ""}
                     </div>
                 ))
             )}

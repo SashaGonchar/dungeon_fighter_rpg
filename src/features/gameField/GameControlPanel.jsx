@@ -1,15 +1,20 @@
 import {useDispatch} from "react-redux";
-import {createMap} from "./gameSlice.js";
+import {createMap, setHeroStartPosition} from "./gameSlice.js";
 
-function GameControlPanel () {
+function GameControlPanel() {
     const dispatch = useDispatch();
-    const level = 1
 
-    return(
+
+    return (
         <div>
             <button className="h-10 w-20 bg-orange-400"
-                    onClick={()=> dispatch(createMap(level))}>
-                Start new Game</button>
+                    onClick={() => dispatch(createMap())}>
+                Start new Game
+            </button>
+            <button className="h-10 w-20 bg-orange-400"
+                    onClick={() => dispatch(setHeroStartPosition())}>
+                Create hero
+            </button>
         </div>
     )
 }

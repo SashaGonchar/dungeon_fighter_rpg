@@ -1,37 +1,67 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    map:[],
-    level:1
+    map: [],
+    targetSpot: {x: 0, y: 0},
+    heroSpot: {x: 0, y: 0},
+    intervalId: null,
 }
 
 const levelMapSlice = createSlice({
     name: "currentMap",
     initialState,
     reducers: {
-        createMap(state, action) {
-            const level = action.payload;
-            const size = 20 + level;
-
-            state.map = Array.from({ length: size }, (_, i) =>
-                Array.from({ length: size }, (_, j) => ({
+        createMap(state) {
+            state.map = Array.from({length: 20}, (_, i) =>
+                Array.from({length: 20}, (_, j) => ({
                     x: i,
                     y: j,
-                    value: null,
+                    player: null,
+                    enemy: null,
                 }))
             );
-            state.level = level;
         },
 
-        setCellValue(state, action) {
-            const { x, y, value } = action.payload;
-            if (state.map[x] && state.map[x][y]) {
-                state.map[x][y].value = value;
-            }
+        setHeroStartPosition(state) {
+            state.heroSpot = { x: 0, y: 0 };
+            state.map[0][0].player = true;
         },
+
+        setTargetSpot(state, action) {
+            state.targetSpot = action.payload;
+        },
+
+        setIntervalId(state, action) {
+            state.intervalId = action.payload;
+        },
+
+        clearIntervalId(state) {
+            state.intervalId = null;
+        },
+
+        moveHeroStep(state) {
+
+            const heroSpot = state.heroSpot;
+            const targetSpot = state.targetSpot;
+
+            state.map[heroSpot.x][heroSpot.y].player = null;
+
+            if (heroSpot.x < targetSpot.x) heroSpot.x += 1;
+            else if (heroSpot.x > targetSpot.x) heroSpot.x -= 1;
+
+            if (heroSpot.y < targetSpot.y) heroSpot.y += 1;
+            else if (heroSpot.y > targetSpot.y) heroSpot.y -= 1;
+
+            state.map[heroSpot.x][heroSpot.y].player = true;
+        }
     },
 });
 
 
-export const {createMap,setCellValue} = levelMapSlice.actions
+export const {createMap,
+    setHeroStartPosition,
+    moveHeroStep,
+    setTargetSpot,
+    setIntervalId,
+    clearIntervalId } = levelMapSlice.actions
 export default levelMapSlice.reducer
