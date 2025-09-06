@@ -1,4 +1,4 @@
-import { moveHeroStep, setIntervalId, clearIntervalId } from "./gameSlice.js";
+import {moveHeroStep, setIntervalId, clearIntervalId, setEnemyPosition} from "./gameSlice.js";
 
 export const startHeroMove = () => (dispatch, getState) => {
     const state = getState().currentMap;
@@ -7,7 +7,7 @@ export const startHeroMove = () => (dispatch, getState) => {
 
     const id = setInterval(() => {
         dispatch(moveHeroStep());
-
+        dispatch(setEnemyPosition());
         const { heroSpot, targetSpot } = getState().currentMap;
 
 
@@ -17,6 +17,7 @@ export const startHeroMove = () => (dispatch, getState) => {
     }, 300);
 
     dispatch(setIntervalId(id));
+
 };
 
 export const stopHeroMove = () => (dispatch, getState) => {

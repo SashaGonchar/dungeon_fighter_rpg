@@ -53,6 +53,16 @@ const levelMapSlice = createSlice({
             else if (heroSpot.y > targetSpot.y) heroSpot.y -= 1;
 
             state.map[heroSpot.x][heroSpot.y].player = true;
+        },
+
+        setEnemyPosition(state) {
+            state.map.forEach(row => {
+                row.forEach(cell => {
+                    if ((Math.floor(Math.random() * 1000) + 1) > 999) {
+                        cell.enemy = true;
+                    }
+                });
+            });
         }
     },
 });
@@ -63,5 +73,6 @@ export const {createMap,
     moveHeroStep,
     setTargetSpot,
     setIntervalId,
-    clearIntervalId } = levelMapSlice.actions
+    clearIntervalId,
+    setEnemyPosition,} = levelMapSlice.actions
 export default levelMapSlice.reducer

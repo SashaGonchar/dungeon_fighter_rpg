@@ -18,8 +18,12 @@ function MapGrid() {
                     <div
                         key={`${cell.x}-${cell.y}`}
                         className={`flex items-center justify-center w-8 h-8 border border-gray-400 text-xs cursor-pointer ${
-                            cell.player ? "bg-blue-500" : "bg-white"   // 👈 теперь герой виден
-                        }`}
+                            cell.player
+                                ? "bg-blue-500"
+                                : cell.enemy
+                                    ? "bg-red-500"
+                                    : "bg-white"
+                        } `}
                         onClick={()=>{
                             dispatch(setTargetSpot({ x: cell.x, y: cell.y }));
                             dispatch(startHeroMove());
